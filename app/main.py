@@ -160,10 +160,10 @@ def get_document(doc_id: int, db: Session = Depends(get_db)):
     preview_url = None
     asset_manifest_path = None
     if doc.doc_id:
-        preview_candidate = Path("out/previews") / doc.doc_id / "index.html"
+        preview_candidate = Path("out") / f"{doc.doc_id}_preview.html"
         if preview_candidate.exists():
             preview_file = str(preview_candidate)
-            preview_url = f"/out/previews/{doc.doc_id}/"
+            preview_url = f"/out/{doc.doc_id}_preview.html"
         manifest_candidate = Path("out") / f"{doc.doc_id}.assets.json"
         if manifest_candidate.exists():
             asset_manifest_path = str(manifest_candidate)

@@ -15,7 +15,7 @@ def generate_preview_html(
     doc_id: str,
     title: Optional[str],
     html_fragment: str,
-    output_dir: Path = Path("out/previews"),
+    output_dir: Path = Path("out"),
     css_path: Path = Path("app/templates/article.css"),
 ) -> Optional[PreviewInfo]:
     """Generate a standalone HTML preview file for a converted document.
@@ -35,7 +35,7 @@ def generate_preview_html(
     safe_title = title or doc_id
 
     # Adjust asset paths so the preview can be served statically from /out
-    preview_html = html_fragment.replace('src="/assets/', 'src="../../assets/')
+    preview_html = html_fragment.replace('src="/assets/', 'src="../assets/')
 
     full_html = f"""<!doctype html>
 <html lang="zh-CN">
@@ -57,13 +57,10 @@ def generate_preview_html(
   </body>
 </html>"""
 
-    doc_dir = output_dir / doc_id
-    doc_dir.mkdir(parents=True, exist_ok=True)
-
-    output_path = doc_dir / "index.html"
+    filename = f"{doc_id}_preview.html"
+    output_path = output_dir / filename
     output_path.write_text(full_html, encoding="utf-8")
 
-    # Relative URL assuming static server root at project root
-    url = f"/out/previews/{doc_id}/"
+    url = f"/out/{filename}"
 
     return PreviewInfo(path=str(output_path), url=url)
