@@ -26,6 +26,7 @@ class DocumentCreateResponse(BaseModel):
     assets: List[AssetItem] = Field(default_factory=list, alias="asset_manifest")
     preview_path: Optional[str] = None
     preview_url: Optional[str] = None
+    asset_manifest_path: Optional[str] = None
 
 
 class DocumentItem(BaseModel):
@@ -41,3 +42,4 @@ class DocumentDetail(DocumentItem):
     assets: List[AssetItem] = Field(default_factory=list, alias="asset_manifest")
     preview_path: Optional[str] = None
     preview_url: Optional[str] = None
+    asset_manifest_path: Optional[str] = None

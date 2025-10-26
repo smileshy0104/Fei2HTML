@@ -16,6 +16,7 @@ from app.converters.hybrid import HybridConverter, ConversionError
 from app.services.image_store import LocalImageStore
 from app.services.sanitizer import sanitize_and_inject_css
 from app.services.preview import generate_preview_html
+from app.services.artifacts import write_asset_manifest
 
 
 app = FastAPI(title="Fei2HTML Hybrid Converter")
@@ -101,6 +102,7 @@ async def upload_and_save(
 
         html_clean = sanitize_and_inject_css(result.html)
         preview_info = generate_preview_html(logical_id, title or logical_id, html_clean)
+        manifest_path = write_asset_manifest(logical_id, result.engine, result.assets)
 
         # Upsert by doc_id if provided or derived
         doc = db.query(Document).filter(Document.doc_id == logical_id).first() if logical_id else None
@@ -139,6 +141,7 @@ async def upload_and_save(
             "asset_manifest": doc.asset_manifest or [],
             "preview_path": preview_info.path if preview_info else None,
             "preview_url": preview_info.url if preview_info else None,
+            "asset_manifest_path": manifest_path,
         })
 
 
@@ -155,11 +158,15 @@ def get_document(doc_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Document not found")
     preview_file = None
     preview_url = None
+    asset_manifest_path = None
     if doc.doc_id:
         preview_candidate = Path("out/previews") / doc.doc_id / "index.html"
         if preview_candidate.exists():
             preview_file = str(preview_candidate)
             preview_url = f"/out/previews/{doc.doc_id}/"
+        manifest_candidate = Path("out") / f"{doc.doc_id}.assets.json"
+        if manifest_candidate.exists():
+            asset_manifest_path = str(manifest_candidate)
     return DocumentDetail.model_validate({
         "id": doc.id,
         "doc_id": doc.doc_id,
@@ -170,4 +177,5 @@ def get_document(doc_id: int, db: Session = Depends(get_db)):
         "asset_manifest": doc.asset_manifest or [],
         "preview_path": preview_file,
         "preview_url": preview_url,
+        "asset_manifest_path": asset_manifest_path,
     })
