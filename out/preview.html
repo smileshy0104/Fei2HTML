@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>预览 - 快卫士用户使用手册</title>
+    <link rel="stylesheet" href="/app/templates/article.css" />
+    <style>
+      body{margin:0; background:#fafafa}
+      .page{max-width: 860px; margin: 24px auto; padding: 16px; background:#fff; box-shadow: 0 1px 3px rgba(0,0,0,.06)}
+      .tips{font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial}
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="tips">预览文件：out/kuaweishi.html（图片通过 /assets/ 映射至 public/assets/）
+        <label style="margin-left:16px"><input id="toggleNumber" type="checkbox"> 启用标题自动编号（展示层）</label>
+      </div>
+      <div id="content">加载中…</div>
+    </div>
+    <script>
+      const content = document.getElementById('content');
+      const check = document.getElementById('toggleNumber');
+      function applyNumbering(){
+        const wrapper = content.querySelector('.lark-article');
+        if(!wrapper) return;
+        if(check.checked) wrapper.classList.add('numbered');
+        else wrapper.classList.remove('numbered');
+      }
+
+      fetch('kuaweishi.html').then(r=>r.text()).then(html=>{
+        content.innerHTML = html;
+        applyNumbering();
+      }).catch(e=>{
+        document.getElementById('content').textContent = '加载失败：' + e;
+      });
+      check.addEventListener('change', applyNumbering);
+    </script>
+  </body>
+  </html>

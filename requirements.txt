@@ -1,0 +1,10 @@
+fastapi==0.112.1
+uvicorn==0.30.6
+bleach==6.1.0
+mammoth==1.8.0
+beautifulsoup4==4.12.3
+SQLAlchemy==2.0.35
+pydantic==2.9.2
+python-dotenv==1.0.1
+PyMySQL==1.1.1
+python-multipart==0.0.9

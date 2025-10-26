@@ -1,0 +1,35 @@
+.lark-article {
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  --font-size: 16px;
+  --line-height: 1.7;
+  --max-width: 760px;
+  color: #222;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+}
+
+.lark-article img { max-width: 100%; height: auto; }
+.lark-article pre { background: #f6f8fa; padding: 12px; overflow: auto; border-radius: 4px; }
+.lark-article code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+.lark-article table { border-collapse: collapse; max-width: 100%; }
+.lark-article th, .lark-article td { border: 1px solid #e5e7eb; padding: 6px 8px; }
+.lark-article h1, .lark-article h2, .lark-article h3, .lark-article h4, .lark-article h5, .lark-article h6 { line-height: 1.25; margin: 1.2em 0 .6em; font-weight: 600; }
+.lark-article h1 { font-size: 2rem; }
+.lark-article h2 { font-size: 1.6rem; }
+.lark-article h3 { font-size: 1.35rem; }
+.lark-article h4 { font-size: 1.15rem; }
+.lark-article p { margin: .6em 0; }
+.lark-article .table-wrap { overflow-x: auto; }
+.lark-article a { color: #2563eb; text-decoration: none; }
+.lark-article a:hover { text-decoration: underline; }
+
+/* 可选：为 h2 启用自动编号（仅展示层）。
+   在容器上添加类名 `.numbered` 即可：<div class="lark-article numbered"> ... */
+.lark-article.numbered { counter-reset: h2; }
+.lark-article.numbered h2::before {
+  counter-increment: h2;
+  content: counter(h2) '、';
+  color: #666;
+  margin-right: 4px;
+}
