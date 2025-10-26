@@ -1,0 +1,73 @@
+{
+  "engine": "pandoc",
+  "assets": [
+    {
+      "name": "image8.png",
+      "url": "/assets/ec2-manual/image8.png"
+    },
+    {
+      "name": "image9.png",
+      "url": "/assets/ec2-manual/image9.png"
+    },
+    {
+      "name": "image14.png",
+      "url": "/assets/ec2-manual/image14.png"
+    },
+    {
+      "name": "image15.png",
+      "url": "/assets/ec2-manual/image15.png"
+    },
+    {
+      "name": "image17.png",
+      "url": "/assets/ec2-manual/image17.png"
+    },
+    {
+      "name": "image16.png",
+      "url": "/assets/ec2-manual/image16.png"
+    },
+    {
+      "name": "image12.png",
+      "url": "/assets/ec2-manual/image12.png"
+    },
+    {
+      "name": "image13.png",
+      "url": "/assets/ec2-manual/image13.png"
+    },
+    {
+      "name": "image11.png",
+      "url": "/assets/ec2-manual/image11.png"
+    },
+    {
+      "name": "image10.png",
+      "url": "/assets/ec2-manual/image10.png"
+    },
+    {
+      "name": "image7.png",
+      "url": "/assets/ec2-manual/image7.png"
+    },
+    {
+      "name": "image6.png",
+      "url": "/assets/ec2-manual/image6.png"
+    },
+    {
+      "name": "image4.png",
+      "url": "/assets/ec2-manual/image4.png"
+    },
+    {
+      "name": "image5.png",
+      "url": "/assets/ec2-manual/image5.png"
+    },
+    {
+      "name": "image1.png",
+      "url": "/assets/ec2-manual/image1.png"
+    },
+    {
+      "name": "image2.png",
+      "url": "/assets/ec2-manual/image2.png"
+    },
+    {
+      "name": "image3.png",
+      "url": "/assets/ec2-manual/image3.png"
+    }
+  ]
+}
