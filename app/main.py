@@ -15,6 +15,7 @@ from app.schemas import ConvertResponse, DocumentCreateResponse, DocumentItem, D
 from app.converters.hybrid import HybridConverter, ConversionError
 from app.services.image_store import LocalImageStore
 from app.services.sanitizer import sanitize_and_inject_css
+from app.services.preview import generate_preview_html
 
 
 app = FastAPI(title="Fei2HTML Hybrid Converter")
@@ -99,6 +100,7 @@ async def upload_and_save(
             raise HTTPException(status_code=500, detail=str(e))
 
         html_clean = sanitize_and_inject_css(result.html)
+        preview_info = generate_preview_html(logical_id, title or logical_id, html_clean)
 
         # Upsert by doc_id if provided or derived
         doc = db.query(Document).filter(Document.doc_id == logical_id).first() if logical_id else None
@@ -135,6 +137,8 @@ async def upload_and_save(
             "css_version": doc.css_version,
             "html_content": doc.html_content,
             "asset_manifest": doc.asset_manifest or [],
+            "preview_path": preview_info.path if preview_info else None,
+            "preview_url": preview_info.url if preview_info else None,
         })
 
 
@@ -149,6 +153,13 @@ def get_document(doc_id: int, db: Session = Depends(get_db)):
     doc = db.query(Document).filter(Document.id == doc_id).first()
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
+    preview_file = None
+    preview_url = None
+    if doc.doc_id:
+        preview_candidate = Path("out/previews") / doc.doc_id / "index.html"
+        if preview_candidate.exists():
+            preview_file = str(preview_candidate)
+            preview_url = f"/out/previews/{doc.doc_id}/"
     return DocumentDetail.model_validate({
         "id": doc.id,
         "doc_id": doc.doc_id,
@@ -157,4 +168,6 @@ def get_document(doc_id: int, db: Session = Depends(get_db)):
         "source_hash": doc.source_hash,
         "html_content": doc.html_content,
         "asset_manifest": doc.asset_manifest or [],
+        "preview_path": preview_file,
+        "preview_url": preview_url,
     })

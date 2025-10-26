@@ -24,6 +24,8 @@ class DocumentCreateResponse(BaseModel):
     css_version: Optional[str] = None
     html: str = Field(alias="html_content")
     assets: List[AssetItem] = Field(default_factory=list, alias="asset_manifest")
+    preview_path: Optional[str] = None
+    preview_url: Optional[str] = None
 
 
 class DocumentItem(BaseModel):
@@ -37,4 +39,5 @@ class DocumentItem(BaseModel):
 class DocumentDetail(DocumentItem):
     html: str = Field(alias="html_content")
     assets: List[AssetItem] = Field(default_factory=list, alias="asset_manifest")
-
+    preview_path: Optional[str] = None
+    preview_url: Optional[str] = None
